@@ -4,7 +4,9 @@ let when;
 
 function showLog( ) {
   let l_ = localStorage.getItem("logMessages");
-  document.getElementById("log").innerHTML = l_;
+  if (l_) {
+    document.getElementById("log").innerHTML = l_;
+  }
 }
 
 
@@ -14,7 +16,12 @@ function log_ (y) {
   // console.log (x);
 
   let l_ = localStorage.getItem("logMessages");
-  l_ = "<p>" + x + "</p>" + l_;
+  if (l_) {
+    l_ = "<p>" + x + "</p>" + l_;
+  } else {
+    l_ = "<p>" + x + "</p>" ;
+
+  }
 
   localStorage.setItem("logMessages", l_);
   document.getElementById("log").innerHTML = l_;
