@@ -48,7 +48,7 @@ function reset(x)  {
     console.log (err);
   }
 
-  log_ ( "duration set to " + x + " min until " + when.format() );
+  log_ ( "Duration set to " + x + " min until " + when.format() );
 }
 
 
