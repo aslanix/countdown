@@ -1,6 +1,6 @@
 let duration_min;
 let when;
-
+let timer_done = false;
 
 
 function log_ (y) {
@@ -42,6 +42,10 @@ function reset(x)  {
   }
 
   log_ ( "Duration set to " + x + " min until " + when.format() );
+
+  if (timer_done) {
+      timer(document.getElementById("counter"));
+  }
 }
 
 
@@ -71,9 +75,10 @@ function timer(where) {
 
     setTimeout(timer, 1000, where);
   } else {
+    timer_done = true;
     where.innerHTML = "[TIMER DONE]";
-    let audio = new Audio('media/ZenTempleBell.mp3');
-    audio.play();
+    let bell_audio = new Audio('media/ShipBrassBell.mp3');
+    bell_audio.play();
   }
 }
 
@@ -141,6 +146,48 @@ function clearactivity () {
   log_ ("Activity cleared");
 }
 
+
+let bg_audio ;
+function playBGAudio() {
+  if (!bg_audio) {
+    bg_audio = new Audio('media/45min_april_rainstorm.mp3');
+    bg_audio.loop = "loop";
+  }
+  bg_audio.volume = 0.5;
+  bg_audio.play();
+
+}
+
+function pauseBGAudio() {
+  if (bg_audio)  {
+    bg_audio.pause();
+  }
+}
+
+
+function lowerBGAudioVolume()  {
+  if (bg_audio ) {
+    if (bg_audio.volume > 0.1) {
+      bg_audio.volume = bg_audio.volume - 0.1
+    } else {
+      bg_audio.volume = 0
+    }
+    //console.log (bg_audio.volume);
+  }
+
+}
+
+
+function raiseBGAudioVolume() {
+  if (bg_audio) {
+    if (bg_audio.volume < 0.9) {
+      bg_audio.volume = bg_audio.volume + 0.1
+    } else {
+      bg_audio.volume = 1
+    }
+    // console.log (bg_audio.volume);
+  }
+}
 
 function startTimer() {
   let run_first = false;
