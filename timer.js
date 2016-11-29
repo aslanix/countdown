@@ -20,10 +20,14 @@ function log_ (y) {
     l_ = "<p>" + x + "</p>" + l_;
   } else {
     l_ = "<p>" + x + "</p>" ;
-
   }
 
-  localStorage.setItem("logMessages", l_);
+  try {
+    localStorage.setItem("logMessages", l_);
+  } catch (err) {
+    console.log (err);
+  }
+
   document.getElementById("log").innerHTML = l_;
 }
 
@@ -37,8 +41,13 @@ function reset(x)  {
     when = moment().add(duration_min,'minutes');
   }
 
-  localStorage.setItem("duration_min", duration_min);
-  localStorage.setItem("when", when.unix());
+  try {
+    localStorage.setItem("duration_min", duration_min);
+    localStorage.setItem("when", when.unix());
+  } catch (err) {
+    console.log (err);
+  }
+
   log_ ( "duration set to " + x + " min until " + when.format() );
 }
 
@@ -84,7 +93,11 @@ function first(x) {
 
 function clearlog () {
 
-  localStorage.setItem("logMessages", "");
+  try {
+    localStorage.setItem("logMessages", "");
+  } catch (err) {
+    console.log(err);
+  }
 
   document.getElementById("log").innerHTML = "";
 }
