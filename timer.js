@@ -1,3 +1,7 @@
+let duration_min = 30;
+
+let when = moment().add (duration_min, 'minutes');
+
 function format_2 (x) {
   let y = Math.floor(x);
   if (y < 10) {
@@ -8,7 +12,7 @@ function format_2 (x) {
 }
 
 
-function timer(where, when) {
+function timer(where) {
   let now = moment();
   if (now.isBefore(when)) {
     var diff = when.diff (now);
@@ -22,7 +26,7 @@ function timer(where, when) {
       format_2 (minutes) + ':' +
       format_2 (seconds);
 
-    setTimeout(timer, 1000, where, when);
+    setTimeout(timer, 1000, where);
   } else {
     where.innerHTML = "[Timer done!]";
   }
@@ -30,5 +34,10 @@ function timer(where, when) {
 
 
 function startTimer() {
-  timer (document.getElementById("counter"), moment().add (30, 'minutes'));
+  timer (document.getElementById("counter") );
+}
+
+function reset(x)  {
+  duration_min = x
+  when = moment().add(duration_min,'minutes');
 }
