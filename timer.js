@@ -2,13 +2,6 @@ let duration_min;
 let when;
 
 
-function showLog( ) {
-  let l_ = localStorage.getItem("logMessages");
-  if (l_) {
-    document.getElementById("log").innerHTML = l_;
-  }
-}
-
 
 function log_ (y) {
   let x = moment().format() + ': ' + y;
@@ -99,7 +92,53 @@ function clearlog () {
     console.log(err);
   }
 
+
   document.getElementById("log").innerHTML = "";
+}
+
+
+function setActivity() {
+  let activityString = document.getElementById("activityInput").value;
+  if (activityString) {
+    document.getElementById ("activity_hr").style.display="block";
+    document.getElementById ("activity_banner").innerHTML = activityString ;
+    document.getElementById ("activity_banner").style.display = "block";
+    log_ ("Activity set to " + activityString);
+
+    try {
+      localStorage.setItem ("activity", activityString);
+    } catch (err) {
+      console.log (err);
+    }
+
+  }
+}
+
+
+function showPrevious( ) {
+  let l_ = localStorage.getItem("logMessages");
+  let a_ = localStorage.getItem("activity");
+  if (l_) {
+    document.getElementById("log").innerHTML = l_;
+  }
+  if (a_) {
+    document.getElementById ("activity_hr").style.display="block";
+    document.getElementById ("activity_banner").innerHTML =  a_ ;
+    document.getElementById ("activity_banner").style.display = "block";
+  }
+}
+
+
+function clearactivity () {
+  document.getElementById ("activity_hr").style.display="none";
+  document.getElementById ("activity_banner").innerHTML = '';
+  document.getElementById ("activity_banner").style.display = "none";
+  try {
+    localStorage.setItem ("activity", "");
+  } catch (err) {
+    console.log (err)
+  }
+  log_ ("Activity cleared");
 }
 
 
@@ -125,7 +164,7 @@ function startTimer() {
   if (run_first) {
     first(30);
   } else {
-    showLog ()
+    showPrevious ()
   }
 
   timer(document.getElementById("counter"));
