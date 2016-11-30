@@ -189,6 +189,32 @@ function raiseBGAudioVolume() {
   }
 }
 
+
+function togglePanel (panelName, toggleName) {
+  let elem = document.getElementById(panelName);
+
+  if (elem.style.display != "none") {
+    elem.style.display = "none"
+    document.getElementById(toggleName).innerHTML = "[Show]";
+  } else {
+    elem.style.display = "block";
+    document.getElementById(toggleName).innerHTML = "[Hide]";
+  }
+}
+
+function toggleActivity() {
+  togglePanel ("panelActivity", "activityToggle");
+}
+
+
+function toggleLog() {
+  togglePanel ("panelLog", "logToggle");
+}
+
+function toggleAdjust() {
+  togglePanel ("panelAdjust", "adjustToggle");
+}
+
 function startTimer() {
   let run_first = false;
   try {
