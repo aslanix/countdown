@@ -27,8 +27,8 @@
 
 
     <div class="panel panel-default">
-      <div class="panel-heading">Adjust countdown</div>
-      <div class="panel-body">
+      <div class="panel-heading">Adjust countdown <a href="javascript:toggleAdjust()" id=adjustToggle>[Hide]</a></div>
+      <div class="panel-body" id="panelAdjust">
 
               <div style="text-align:center">
 
@@ -48,10 +48,9 @@
     </div>
 
 <div class="panel panel-default">
-      <div class="panel-heading">Set activity</div>
+      <div class="panel-heading">Set activity <a href="javascript:toggleActivity()" id=activityToggle>[Hide]</a></div>
 
-
-        <div class="panel-body">
+        <div class="panel-body" id="panelActivity">
             <form action="javascript:setActivity()">
               <div class="input-group">
                 <span class="input-group-btn">
@@ -67,14 +66,9 @@
 
 
       <div class="panel panel-default">
-            <div class="panel-heading">Log</div>
+            <div class="panel-heading">Log <a href="javascript:toggleLog()" id = logToggle>[Hide]</a> </div>
 
-
-              <div class="panel-body">
-
-
-
-
+              <div class="panel-body" id="panelLog">
                 <div id=log>
                 </div>
                 <a href="javascript:clearlog()">[Clear log]</a>
