@@ -1,103 +1,73 @@
 <html>
+
 <head>
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   <script src="bower_components/moment/moment.js"></script>
   <script src="timer.js"></script>
   <title>Countdown</title>
-  <script>
-      window.onload = startTimer;
-  </script>
+  <script> window.onload = startTimer; </script>
 </head>
 
 <body>
-
   <div class="container">
-
-       <div class="jumbotron">
-         <h1 style="text-align:center" id = "counter">[Timer]</h1>
-         <hr id="activity_hr" style="display:none">
-         <h1 style="text-align:center;display:none" id = "activity_banner">[Activity]<h1>
-       </div>
-
-          <!-- <div class="progress">
+    <div class="jumbotron">
+      <h1 style="text-align:center" id="counter">[Timer]</h1>
+      <hr id="activity_hr" style="display:none">
+      <h1 style="text-align:center;display:none" id="activity_banner">[Activity]
+        <h1>
+    </div>
+    <!-- <div class="progress">
             <div class="progress-bar" id="progressbar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
             <span class="sr-only">60% Complete</span>
             </div>
           </div> -->
-
-
     <div class="panel panel-default">
       <div class="panel-heading">Adjust countdown <a href="javascript:toggleAdjust()" id=adjustToggle>[Hide]</a></div>
       <div class="panel-body" id="panelAdjust">
-
-              <div style="text-align:center">
-
-                      <a href="javascript:reset(0.05)" >[05 sec]</a>
-                      <a href="javascript:reset(5)" >[05 min]</a>
-                      <a href="javascript:reset(10)">[10 min]</a>
-                      <a href="javascript:reset(15)">[15 min]</a>
-                      <a href="javascript:reset(30)">[30 min]</a>
-                      <a href="javascript:reset(45)">[45 min]</a>
-                      <a href="javascript:reset(60)">[60 min]</a>
-
-
-
-                </div>
-
-            </div>
-    </div>
-
-<div class="panel panel-default">
-      <div class="panel-heading">Set activity <a href="javascript:toggleActivity()" id=activityToggle>[Hide]</a></div>
-
-        <div class="panel-body" id="panelActivity">
-            <form action="javascript:setActivity()">
-              <div class="input-group">
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="button" onclick="setActivity()">#</button>
-                </span>
-                  <input type="text" id = "activityInput" class="form-control" placeholder="What activity are you working on?" aria-describedby="basic-addon1">
-              </div>
-            </form>
-                <a href="javascript:clearactivity()">[Clear activity]</a>
+        <div style="text-align:center">
+          <a href="javascript:reset(0.05)">[05 sec]</a>
+          <a href="javascript:reset(5)">[05 min]</a>
+          <a href="javascript:reset(10)">[10 min]</a>
+          <a href="javascript:reset(15)">[15 min]</a>
+          <a href="javascript:reset(30)">[30 min]</a>
+          <a href="javascript:reset(45)">[45 min]</a>
+          <a href="javascript:reset(60)">[60 min]</a>
         </div>
       </div>
-
-
-
-      <div class="panel panel-default">
-            <div class="panel-heading">Log <a href="javascript:toggleLog()" id = logToggle>[Hide]</a> </div>
-
-              <div class="panel-body" id="panelLog">
-                <div id=log>
-                </div>
-                <a href="javascript:clearlog()">[Clear log]</a>
-              </div>
-
-            </div>
-
-
-      <div class="panel panel-default">
-            <div class="panel-heading">Background audio</div>
-
-              <div class="panel-body">
-                <a href="javascript:playBGAudio()">[Play]</a>
-                <a href="javascript:pauseBGAudio()">[Pause]</a>
-                <a href="javascript:lowerBGAudioVolume()"> [ - Quieter- ]</a>
-                <a href="javascript:raiseBGAudioVolume()"> [ + Louder+ ]</a>
-              </div>
-
-            </div>
-
-
-
-
-
-
-  </div> <!-- /container -->
-
-
-
-
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">Set activity <a href="javascript:toggleActivity()" id=activityToggle>[Hide]</a></div>
+      <div class="panel-body" id="panelActivity">
+        <form action="javascript:setActivity()">
+          <div class="input-group">
+            <span class="input-group-btn">
+                  <button class="btn btn-default" type="button" onclick="setActivity()">#</button>
+            </span>
+            <input type="text" id="activityInput" class="form-control" placeholder="What activity are you working on?" aria-describedby="basic-addon1">
+          </div>
+        </form>
+        <a href="javascript:clearactivity()">[Clear activity]</a>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">Log <a href="javascript:toggleLog()" id=l ogToggle>[Hide]</a> </div>
+      <div class="panel-body" id="panelLog">
+        <div id=log>
+        </div>
+        <a href="javascript:clearlog()">[Clear log]</a>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">Background audio</div>
+      <div class="panel-body">
+        <a href="javascript:playBGAudio()">[Play]</a>
+        <a href="javascript:pauseBGAudio()">[Pause]</a>
+        <a href="javascript:lowerBGAudioVolume()"> [ - Quieter- ]</a>
+        <a href="javascript:raiseBGAudioVolume()"> [ + Louder+ ]</a>
+      </div>
+    </div>
+  </div>
+  <!-- /container -->
 </body>
+
 </html>
