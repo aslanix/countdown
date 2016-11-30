@@ -152,8 +152,8 @@ function playBGAudio() {
   if (!bg_audio) {
     bg_audio = new Audio('media/45min_april_rainstorm.mp3');
     bg_audio.loop = "loop";
+    bg_audio.volume = 0.5;
   }
-  bg_audio.volume = 0.5;
   bg_audio.play();
 
 }
