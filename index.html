@@ -11,27 +11,47 @@
 <body>
   <div class="container">
     <div class="jumbotron">
-      <h1 style="text-align:center" id="counter">[Timer]</h1>
+      <h1 style="text-align:center;display:none" id="activity_banner">[Activity]<h1></h1>
       <hr id="activity_hr" style="display:none">
-      <h1 style="text-align:center;display:none" id="activity_banner">[Activity]
-        <h1>
+      <h1 style="text-align:center" id="counter">[Timer]</h1>        
+
+      
     </div>
     <!-- <div class="progress">
             <div class="progress-bar" id="progressbar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
             <span class="sr-only">60% Complete</span>
             </div>
           </div> -->
+      
+    <div style="text-align: left;vertical-align: bottom;">
+            <a href="javascript:toggleControls()">[Toggle controls]</a>            
+    </div>
+    <div id="controls">
+
+    
     <div class="panel panel-default">
       <div class="panel-heading">Adjust countdown <a href="javascript:toggleAdjust()" id=adjustToggle>[Hide]</a></div>
       <div class="panel-body" id="panelAdjust">
         <div style="text-align:center">
           <a href="javascript:reset(0.05)">[05 sec]</a>
+          <a href="javascript:reset(1)">[01 min]</a>
           <a href="javascript:reset(5)">[05 min]</a>
           <a href="javascript:reset(10)">[10 min]</a>
           <a href="javascript:reset(15)">[15 min]</a>
           <a href="javascript:reset(30)">[30 min]</a>
           <a href="javascript:reset(45)">[45 min]</a>
           <a href="javascript:reset(60)">[60 min]</a>
+          |
+          <a href="javascript:pad(false)">[pad -]</a> 
+          <a href="javascript:pad(true)">[pad +]</a>
+        </div>
+        <div style="text-align:center">
+          <a href="javascript:add(0.05)">{+05 sec}</a>
+          <a href="javascript:add(0.30)">{+30 sec}</a>
+          <a href="javascript:add(1)">{+01 min}</a>
+          <a href="javascript:add(5)">{+05 min}</a>
+          <a href="javascript:add(15)">{+15 min}</a>
+          <a href="javascript:add(60)">{+60 min}</a>
         </div>
       </div>
     </div>
@@ -65,6 +85,7 @@
         <a href="javascript:lowerBGAudioVolume()"> [ - Quieter- ]</a>
         <a href="javascript:raiseBGAudioVolume()"> [ + Louder+ ]</a>
       </div>
+    </div>
     </div>
   </div>
   <!-- /container -->

@@ -1,7 +1,7 @@
 let duration_min;
 let when;
 let timer_done = false;
-
+const noTime = "--:--:--"
 
 function log_ (y) {
   let x = moment().format() + ': ' + y;
@@ -44,8 +44,43 @@ function reset(x)  {
   log_ ( "Duration set to " + x + " min until " + when.format() );
 
   if (timer_done) {
+      timer_done = false;
       timer(document.getElementById("counter"));
   }
+}
+
+function add(x) {
+  if ( x< 1) {
+    when.add(x * 100, 'seconds')
+  } else {
+    duration_min += x
+    when.add(x, 'minutes')
+  }
+  try {
+    localStorage.setItem("duration_min", duration_min)
+    localStorage.setItem ("when", when.unix())
+  } catch (err) {
+    console.log(err)
+  }
+  log_ (`Duration increased by ${x} min until ${when.format()}`)
+  
+  if (timer_done) {
+    timer(document.getElementById("counter"));
+  }
+}
+
+function pad(y) {
+  if (!timer_done && when.seconds() > 0) {
+    if (y) {
+      when.add (60 - when.seconds(), 'seconds')
+      localStorage.setItem ("when", when.unix())
+      log_ (`Duration increased until ${when.format()}`)
+    } else {
+      when.subtract (when.seconds(), 'seconds')
+      localStorage.setItem ("when", when.unix())
+      log_ (`Duration decreased until ${when.format()}`)
+    }
+  }  
 }
 
 
@@ -76,7 +111,7 @@ function timer(where) {
     setTimeout(timer, 1000, where);
   } else {
     timer_done = true;
-    where.innerHTML = "[TIMER DONE]";
+    where.innerHTML = noTime;
     let bell_audio = new Audio('media/ShipBrassBell.mp3');
     bell_audio.play();
   }
@@ -84,9 +119,17 @@ function timer(where) {
 
 
 function first(x) {
+  let activityString = localStorage.getItem("activity")
+  if (activityString) {
+    document.getElementById ("activity_hr").style.display="block";
+    document.getElementById ("activity_banner").innerHTML = activityString ;
+    document.getElementById ("activity_banner").style.display = "block";
+  }
   log_ ("First run at " + moment().format());
   reset (x);
 }
+
+
 
 
 function clearlog () {
@@ -115,7 +158,6 @@ function setActivity() {
     } catch (err) {
       console.log (err);
     }
-
   }
 }
 
@@ -235,7 +277,7 @@ function startTimer() {
 
 
   if (run_first) {
-    first(30);
+    first(15);
   } else {
     showPrevious ()
   }
