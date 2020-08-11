@@ -235,16 +235,19 @@ function raiseBGAudioVolume() {
 function toggleControls () {
   let controls = document.getElementById("controls")
   let jumbo = document.getElementById("grayJumbotron")
+  let container = document.getElementById ("theContainer")
   if (controls.style.display != "none") {
     controls.style.display = "none"
     let btn = document.getElementById("btnToggleControls")
     btn.style.display = "none"        
     jumbo.className = "presentationMode"
+    container.className  = "presentationMode"
     document.getElementById("activity_banner").className = "presentationMode"
     document.getElementById("counter").className= "presentationMode"
   } else {
     controls.style.display = "block"    
     jumbo.className = "jumbotron"
+    container.className = "container"
     document.getElementById("activity_banner").className = ""
     document.getElementById("counter").className= ""
   }
