@@ -232,9 +232,44 @@ function raiseBGAudioVolume() {
 }
 
 
+function toggleControls () {
+  let controls = document.getElementById("controls")
+  let jumbo = document.getElementById("grayJumbotron")
+  if (controls.style.display != "none") {
+    controls.style.display = "none"
+    let btn = document.getElementById("btnToggleControls")
+    btn.style.display = "none"        
+    jumbo.className = "presentationMode"
+    document.getElementById("activity_banner").className = "presentationMode"
+    document.getElementById("counter").className= "presentationMode"
+  } else {
+    controls.style.display = "block"    
+    jumbo.className = "jumbotron"
+    document.getElementById("activity_banner").className = ""
+    document.getElementById("counter").className= ""
+  }
+}
+
+function showBtnToggle(e) {  
+  let btn = document.getElementById('btnToggleControls');
+  let controls = document.getElementById("controls")
+  let jumboRect = document.getElementById('grayJumbotron').getBoundingClientRect()
+  if (btn.style.display == "none") {
+    const isCloseX = Math.abs (jumboRect.x + jumboRect.width - e.clientX) < 120
+    const isCloseY = Math.abs (jumboRect.y + jumboRect.height - e.clientY) < 120
+    if (isCloseX && isCloseY) {
+      btn.style.display = 'block'
+      setTimeout(()=> {
+        if (controls.style.display == "none") {
+          btn.style.display = 'none'
+        }
+      },2000)
+    }    
+  }  
+} 
+
 function togglePanel (panelName, toggleName) {
   let elem = document.getElementById(panelName);
-
   if (elem.style.display != "none") {
     elem.style.display = "none"
     document.getElementById(toggleName).innerHTML = "[Show]";
@@ -281,6 +316,10 @@ function startTimer() {
   } else {
     showPrevious ()
   }
+
+  const jumbotron = 
+    document.getElementById("grayJumbotron");
+  jumbotron.addEventListener('mousemove',showBtnToggle);
 
   timer(document.getElementById("counter"));
 

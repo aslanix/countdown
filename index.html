@@ -6,26 +6,24 @@
   <script src="timer.js"></script>
   <title>Countdown</title>
   <script> window.onload = startTimer; </script>
+  <style>
+    h1.presentationMode {
+      font-size:120pt
+    }
+  </style>
 </head>
 
 <body>
-  <div class="container">
-    <div class="jumbotron">
+  <div class="container" >
+    <div class="jumbotron" style="position:relative" id = "grayJumbotron">
       <h1 style="text-align:center;display:none" id="activity_banner">[Activity]<h1></h1>
       <hr id="activity_hr" style="display:none">
       <h1 style="text-align:center" id="counter">[Timer]</h1>        
-
-      
+      <div id="btnToggleControls" style="text-align: left;vertical-align: bottom; position: absolute; bottom:10px; right: 20px;">
+        <a href="javascript:toggleControls()">[Toggle controls]</a>            
+      </div>  
     </div>
-    <!-- <div class="progress">
-            <div class="progress-bar" id="progressbar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-            <span class="sr-only">60% Complete</span>
-            </div>
-          </div> -->
       
-    <div style="text-align: left;vertical-align: bottom;">
-            <a href="javascript:toggleControls()">[Toggle controls]</a>            
-    </div>
     <div id="controls">
 
     
