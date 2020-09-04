@@ -290,7 +290,8 @@ function showBtnToggle(e) {
   if (btn.style.display == "none") {
     const isCloseX = Math.abs (jumboRect.x + jumboRect.width - e.clientX) < 120
     const isCloseY = Math.abs (jumboRect.y + jumboRect.height - e.clientY) < 120
-    if (isCloseX && isCloseY) {
+    if (isCloseX // && isCloseY
+      ) {
       btn.style.display = 'block'
       setTimeout(()=> {
         if (controls.style.display == "none") {
@@ -373,9 +374,9 @@ function startTimer() {
     showPrevious ()
   }
 
-  const jumbotron = 
-    document.getElementById("grayJumbotron");
-  jumbotron.addEventListener('mousemove',showBtnToggle);
+  const container = 
+    document.getElementById("theContainer");
+  container.addEventListener('mousemove',showBtnToggle);
 
   for (let i = 0; i < n_exact; i++) {
     exactElements.push (document.getElementById("exact" + i));
