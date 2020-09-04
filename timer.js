@@ -1,4 +1,4 @@
-let duration_min;
+// let duration_min;
 let when;
 let timer_done = false;
 const noTime = "--:--:--"
@@ -6,7 +6,6 @@ const noTime = "--:--:--"
 function log_ (y) {
   let x = moment().format() + ': ' + y;
 
-  // console.log (x);
 
   let l_ = localStorage.getItem("logMessages");
   if (l_) {
@@ -25,62 +24,70 @@ function log_ (y) {
 }
 
 
-function reset(x)  {
-  if (x < 1) {
-    duration_min = 0;
-    when = moment().add(x*100, 'seconds');
-  } else {
-    duration_min = x
-    when = moment().add(duration_min,'minutes');
-  }
-
-  try {
-    localStorage.setItem("duration_min", duration_min);
+function persistWhen (){
+  try {    
     localStorage.setItem("when", when.unix());
+    var diff = when.diff (moment());
+
+    
+    let minutes = Math.ceil ( (diff / 60000) % 60);
+    
+    log_ ( "Duration set to " + minutes + " min until " + when.format() );
+    render()
+
   } catch (err) {
     console.log (err);
+  }  
+}
+
+function setWhen (x) {
+  when = x;
+  persistWhen();
+  
+}
+
+
+function reset(x)  {
+  if (x < 1) {    
+    setWhen (moment().add(x*100, 'seconds'));
+  } else {    
+    setWhen (when = moment().add(x,'minutes'));
   }
 
-  log_ ( "Duration set to " + x + " min until " + when.format() );
+  
+  
 
   if (timer_done) {
       timer_done = false;
-      timer(document.getElementById("counter"));
+      // timer(document.getElementById("counter"));
   }
 }
 
 function add(x) {
   if ( x< 1) {
-    when.add(x * 100, 'seconds')
+    setWhen (when.add(x * 100, 'seconds'))
   } else {
-    duration_min += x
-    when.add(x, 'minutes')
-  }
-  try {
-    localStorage.setItem("duration_min", duration_min)
-    localStorage.setItem ("when", when.unix())
-  } catch (err) {
-    console.log(err)
-  }
-  log_ (`Duration increased by ${x} min until ${when.format()}`)
-  
-  if (timer_done) {
-    timer(document.getElementById("counter"));
-  }
+    // duration_min += x
+    setWhen (when.add(x, 'minutes'))
+  }  
+
+  timer_done = when.isBefore (moment())
 }
 
 function pad(y) {
   if (!timer_done && when.seconds() > 0) {
     if (y) {
       when.add (60 - when.seconds(), 'seconds')
-      localStorage.setItem ("when", when.unix())
-      log_ (`Duration increased until ${when.format()}`)
     } else {
       when.subtract (when.seconds(), 'seconds')
-      localStorage.setItem ("when", when.unix())
-      log_ (`Duration decreased until ${when.format()}`)
     }
+    persistWhen()
   }  
+}
+
+function setExact(i) {
+  setWhen (moment(exactTimeStamps[i]))
+  timer_done = false;  
 }
 
 
@@ -93,28 +100,40 @@ function format_2 (x) {
   }
 }
 
-
-function timer(where) {
+function render (check = false) {
   let now = moment();
-  if (now.isBefore(when)) {
+  if (check || now.isBefore(when)) {
     var diff = when.diff (now);
-
     let seconds = (diff / 1000) % 60;
     let minutes = (diff / 60000) % 60;
     let hours   = (diff / (60000*60) ) % 60;
 
-    where.innerHTML =
+    document.getElementById("counter").innerHTML =
       format_2 (hours)   + ':' +
       format_2 (minutes) + ':' +
-      format_2 (seconds);
-
-    setTimeout(timer, 1000, where);
-  } else {
-    timer_done = true;
-    where.innerHTML = noTime;
-    let bell_audio = new Audio('media/ShipBrassBell.mp3');
-    bell_audio.play();
+      format_2 (seconds);    
   }
+}
+
+function timer() {
+  let now = moment();
+  
+  if (now.isBefore(when)) {
+    render(true)
+  } else {
+    if (!timer_done) {
+      let bell_audio = new Audio('media/ShipBrassBell.mp3');
+      bell_audio.play();
+    }
+    timer_done = true;
+    document.getElementById("counter").innerHTML = noTime;  
+  }
+
+  if (now.minute() % 15 == 0) {
+    annotateExacts()
+  }
+
+  setTimeout(timer, 1000);
 }
 
 
@@ -129,6 +148,7 @@ function first(x) {
   log_ ("First run at " + moment().format());
   reset (x);
 }
+
 
 
 
@@ -177,6 +197,41 @@ function showPrevious( ) {
   }
 }
 
+let exactElements = [] 
+let n_exact = 5;
+let exactTimeStamps = new Array(n_exact)
+function annotateExacts() {
+  let now = moment ();
+  let next = moment (now);  
+  let minute = now.minute(); 
+  next.seconds(0)
+  next.milliseconds(0)
+
+  if (minute < 15) {
+    next.minute (15)
+  } else if (minute < 30) {
+    next.minute (30) 
+  } else if (minute < 45) {
+    next.minute (45)
+  } else {
+    next.minute (0)
+    next.add(1, 'h');
+  }
+  
+  
+  exactTimeStamps[0] = next;
+  for (let i = 1; i < n_exact; i++) {    
+    exactTimeStamps [i] = moment (exactTimeStamps[i-1])    
+    exactTimeStamps[i].add(15, 'm');  
+  } 
+
+  for (let i = 0; i < n_exact; i++) {
+    exactElements[i].innerHTML = exactTimeStamps[i].format("HH:mm")
+  }
+
+    
+}
+
 
 function clearactivity () {
   document.getElementById ("activity_hr").style.display="none";
@@ -217,7 +272,7 @@ function lowerBGAudioVolume()  {
     } else {
       bg_audio.volume = 0
     }
-    //console.log (bg_audio.volume);
+    
   }
 
 }
@@ -229,8 +284,7 @@ function raiseBGAudioVolume() {
       bg_audio.volume = bg_audio.volume + 0.1
     } else {
       bg_audio.volume = 1
-    }
-    // console.log (bg_audio.volume);
+    }    
   }
 }
 
@@ -327,6 +381,11 @@ function startTimer() {
     document.getElementById("grayJumbotron");
   jumbotron.addEventListener('mousemove',showBtnToggle);
 
-  timer(document.getElementById("counter"));
+  for (let i = 0; i < n_exact; i++) {
+    exactElements.push (document.getElementById("exact" + i));
+  }
+  annotateExacts()
+
+  timer();
 
 }
