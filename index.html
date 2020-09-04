@@ -8,10 +8,19 @@
   <script> window.onload = startTimer; </script>
   <style>
     h1.presentationMode {
-      font-size:120pt
+      font-size:10vw
     }
-    #container.presentationMode {      
-      width: 100;
+    #theContainer.presentationMode {      
+      width: 100%;
+      height: 100%;
+      position:relative;
+    }
+
+    #grayJumbotron.presentationMode {
+      position:absolute;      
+      top: 50%;
+      transform:translateY(-50%);
+      
     }
   </style>
 </head>
@@ -61,10 +70,11 @@
       <div class="panel-body" id="panelActivity">
         <form action="javascript:setActivity()">
           <div class="input-group">
-            <span class="input-group-btn">
-                  <button class="btn btn-default" type="button" onclick="setActivity()">#</button>
-            </span>
             <input type="text" id="activityInput" class="form-control" placeholder="What activity are you working on?" aria-describedby="basic-addon1">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button" onclick="setActivity()">Set</button>
+            </span>
+        
           </div>
         </form>
         <a href="javascript:clearactivity()">[Clear activity]</a>

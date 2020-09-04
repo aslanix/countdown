@@ -123,7 +123,8 @@ function first(x) {
   if (activityString) {
     document.getElementById ("activity_hr").style.display="block";
     document.getElementById ("activity_banner").innerHTML = activityString ;
-    document.getElementById ("activity_banner").style.display = "block";
+    document.getElementById ("activity_banner").style.display = "block";    
+    document.getElementById ("activityInput").value = activityString;
   }
   log_ ("First run at " + moment().format());
   reset (x);
@@ -172,6 +173,7 @@ function showPrevious( ) {
     document.getElementById ("activity_hr").style.display="block";
     document.getElementById ("activity_banner").innerHTML =  a_ ;
     document.getElementById ("activity_banner").style.display = "block";
+    document.getElementById ("activityInput").value = a_;
   }
 }
 
@@ -180,6 +182,7 @@ function clearactivity () {
   document.getElementById ("activity_hr").style.display="none";
   document.getElementById ("activity_banner").innerHTML = '';
   document.getElementById ("activity_banner").style.display = "none";
+  document.getElementById ("activityInput").value = ""
   try {
     localStorage.setItem ("activity", "");
   } catch (err) {
