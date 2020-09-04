@@ -39,7 +39,6 @@ function persistWhen (){
     console.log (err);
   }  
 }
-<<<<<<< HEAD
 
 function setWhen (x) {
   when = x;
@@ -53,29 +52,6 @@ function reset(x)  {
     setWhen (moment().add(x*100, 'seconds'));
   } else {    
     setWhen (when = moment().add(x,'minutes'));
-=======
-
-function setWhen (x) {
-  when = x;
-  persistWhen();
-  
-}
-
-
-function reset(x)  {
-  if (x < 1) {    
-    setWhen (moment().add(x*100, 'seconds'));
-  } else {    
-    setWhen (when = moment().add(x,'minutes'));
-  }
-
-  
-  
-
-  if (timer_done) {
-      timer_done = false;
-      // timer(document.getElementById("counter"));
->>>>>>> 1bd62a56b1a5e496dbd9dcb86d44f0b06ea1c6e4
   }
   timer_done = false;
 
@@ -131,12 +107,6 @@ function render (check = false) {
       format_2 (minutes) + ':' +
       format_2 (seconds);    
   }
-
-  if (now.minute() % 15 == 0) {
-    annotateExacts()
-  }
-
-  setTimeout(timer, 1000);
 }
 
 
