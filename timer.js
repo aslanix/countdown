@@ -1,12 +1,45 @@
 // let duration_min;
 let when;
 let timer_done = false;
+let is_full_screen = false;
+let showing_when = false;
 const noTime = "--:--:--"
+
+let mouseDownGuard;
+
+function mouseDown () {  
+  if (is_full_screen) {
+    let r = Math.random()    
+    mouseDownGuard = r;
+    setTimeout(()=> {
+      if (mouseDownGuard == r) {
+        document.getElementById("counter").innerHTML = "until " + when.format ("HH:MM")
+        showing_when = true;
+      }
+    },500)
+  }
+}
+
+function mouseUp () {
+  mouseDownGuard = null;
+  if (showing_when) {
+    showing_when = false;   
+    render ();
+  }  
+}
+
+
+// function keyDown() {
+//   console.log ("key down")
+// }
+
+// function keyUp() {
+//   console.log ("key up")
+// }
+
 
 function log_ (y) {
   let x = moment().format() + ': ' + y;
-
-
   let l_ = localStorage.getItem("logMessages");
   if (l_) {
     l_ = "<p>" + x + "</p>" + l_;
@@ -19,22 +52,21 @@ function log_ (y) {
   } catch (err) {
     console.log (err);
   }
-
   document.getElementById("log").innerHTML = l_;
 }
 
+function displayCurrent() {
+  document.getElementById("when_display").innerHTML = `The countdown ends at ${when.format('HH:mm:ss')}`
+}
 
 function persistWhen (){
   try {    
     localStorage.setItem("when", when.unix());
     var diff = when.diff (moment());
-
-    
-    let minutes = Math.ceil ( (diff / 60000) % 60);
-    
-    log_ ( "Duration set to " + minutes + " min until " + when.format() );
+    let minutes = Math.ceil ( (diff / 60000) % 60);    
+    log_ ( "Duration set to " + minutes + " min until " + when.format('LTS') );    
+    displayCurrent()
     render()
-
   } catch (err) {
     console.log (err);
   }  
@@ -42,8 +74,7 @@ function persistWhen (){
 
 function setWhen (x) {
   when = x;
-  persistWhen();
-  
+  persistWhen();  
 }
 
 
@@ -54,7 +85,6 @@ function reset(x)  {
     setWhen (when = moment().add(x,'minutes'));
   }
   timer_done = false;
-
 }
 
 function add(x) {
@@ -64,7 +94,6 @@ function add(x) {
     // duration_min += x
     setWhen (when.add(x, 'minutes'))
   }  
-
   timer_done = when.isBefore (moment())
 }
 
@@ -95,6 +124,7 @@ function format_2 (x) {
 }
 
 function render (check = false) {
+  if (mouseDownGuard) return
   let now = moment();
   if (check || now.isBefore(when)) {
     var diff = when.diff (now);
@@ -118,23 +148,18 @@ function first(x) {
     document.getElementById ("activity_banner").style.display = "block";    
     document.getElementById ("activityInput").value = activityString;
   }
-  log_ ("First run at " + moment().format());
+  log_ ("Page loaded " + moment().format());
   reset (x);
 }
 
 
 
-
-
 function clearlog () {
-
   try {
     localStorage.setItem("logMessages", "");
   } catch (err) {
     console.log(err);
   }
-
-
   document.getElementById("log").innerHTML = "";
 }
 
@@ -266,7 +291,7 @@ function toggleControls () {
   let controls = document.getElementById("controls")
   let jumbo = document.getElementById("grayJumbotron")
   let container = document.getElementById ("theContainer")
-  if (controls.style.display != "none") {
+  if (!is_full_screen) {
     controls.style.display = "none"
     let btn = document.getElementById("btnToggleControls")
     btn.style.display = "none"        
@@ -274,12 +299,14 @@ function toggleControls () {
     container.className  = "presentationMode"
     document.getElementById("activity_banner").className = "presentationMode"
     document.getElementById("counter").className= "presentationMode"
+    is_full_screen = true;
   } else {
     controls.style.display = "block"    
     jumbo.className = "jumbotron"
     container.className = "container"
     document.getElementById("activity_banner").className = ""
     document.getElementById("counter").className= ""
+    is_full_screen = false;
   }
 }
 
@@ -353,10 +380,12 @@ function startTimer() {
   let run_first = false;
   try {
     let when_ = moment.unix(localStorage.getItem("when"));
+    
     let now_ = moment();
 
     if (now_.isBefore(when_)) {
-        when = when_;
+      when = when_;
+      displayCurrent()
 
     } else {
       run_first = true;
@@ -377,6 +406,9 @@ function startTimer() {
   const container = 
     document.getElementById("theContainer");
   container.addEventListener('mousemove',showBtnToggle);
+
+  // container.addEventListener('keydown',keyDown)
+  // container.addEventListener('keyup',keyUp)
 
   for (let i = 0; i < n_exact; i++) {
     exactElements.push (document.getElementById("exact" + i));

@@ -26,7 +26,9 @@
 </head>
 
 <body>
-  <div class="container" id = "theContainer" >
+  <div class="container" id = "theContainer" 
+     onmousedown="mouseDown()" onmouseup="mouseUp()"     
+     >
     <div class="jumbotron" style="position:relative" id = "grayJumbotron">
       <h1 style="text-align:center;display:none" id="activity_banner">[Activity]<h1></h1>
       <hr id="activity_hr" style="display:none">
@@ -35,13 +37,21 @@
         <a href="javascript:toggleControls()">[Toggle controls]</a>            
       </div>  
     </div>
+
       
     <div id="controls">
 
+      <div class="alert alert-info" id = "when_display" role="alert">
+        &nbsp;
+      </div>
+    
     
     <div class="panel panel-default">
-      <div class="panel-heading">Adjust countdown <a href="javascript:toggleAdjust()" id=adjustToggle>[Hide]</a></div>
-      <div class="panel-body" id="panelAdjust">
+      <div class="panel-heading">
+          Adjust countdown <a href="javascript:toggleAdjust()" id=adjustToggle>[Hide]</a>
+          
+      </div>
+      <div class="panel-body" id="panelAdjust">        
         <div style="text-align:center">
           <a href="javascript:reset(0.05)">[05 sec]</a>          
           <a href="javascript:reset(1)">[01 min]</a>
@@ -56,12 +66,12 @@
           <a href="javascript:pad(true)">[ pad+ ]</a>           
         </div>
         <div style="text-align:center">
-          <a href="javascript:add(0.05)">{+05 sec}</a>
-          <a href="javascript:add(0.30)">{+30 sec}</a>
-          <a href="javascript:add(1)">{+01 min}</a>
-          <a href="javascript:add(5)">{+05 min}</a>
-          <a href="javascript:add(15)">{+15 min}</a>
-          <a href="javascript:add(60)">{+60 min}</a>
+          <a href="javascript:add(0.05)" id="add_5sec">{+05 sec}</a>
+          <a href="javascript:add(0.30)" id="add_30sec">{+30 sec}</a>
+          <a href="javascript:add(1)"    id="add_1min">{+01 min}</a>
+          <a href="javascript:add(5)"    id="add_5min">{+05 min}</a>
+          <a href="javascript:add(15)"   id="add_15min">{+15 min}</a>
+          <a href="javascript:add(60)"   id="add_60min">{+60 min}</a>
           
         </div>
         <div style="text-align:center">       
@@ -92,7 +102,7 @@
       </div>
     </div>
     <div class="panel panel-default">
-      <div class="panel-heading">Log <a href="javascript:toggleLog()" id=l ogToggle>[Hide]</a> </div>
+      <div class="panel-heading">Log <a href="javascript:toggleLog()" id=logToggle>[Hide]</a> </div>
       <div class="panel-body" id="panelLog">
         <div id=log>
         </div>
