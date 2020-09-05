@@ -29,13 +29,71 @@ function mouseUp () {
 }
 
 
-// function keyDown() {
-//   console.log ("key down")
-// }
+let altGuard = null;
 
-// function keyUp() {
-//   console.log ("key up")
-// }
+let add_multiplier = 1 
+
+function setNegativeAdditions() {
+  let now = moment ()
+  function w()  {
+    return (moment(when))
+  }
+  document.getElementById("add_5sec").innerHTML = "{-05 sec}"
+  if (w().subtract(5, 's').isBefore(now)) {
+    document.getElementById("add_5sec").href=""
+  }
+  document.getElementById("add_30sec").innerHTML = "{-30 sec}"
+  if (w().subtract(30, 's').isBefore(now)) {
+    document.getElementById("add_30sec").style.pointerEvents = "none"
+  }
+  document.getElementById("add_1min").innerHTML = "{-01 min}"
+  if (w().subtract(1, 'm').isBefore(now)) {
+    document.getElementById("add_1min").style.pointerEvents = "none"
+  }
+  document.getElementById("add_5min").innerHTML = "{-05 min}"
+  if (w().subtract(5, 'm').isBefore(now)) {
+    document.getElementById("add_5min").style.pointerEvents = "none"
+  }
+  document.getElementById("add_15min").innerHTML = "{-15 min}"
+  if (w().subtract(15, 'm').isBefore(now)) {
+    document.getElementById("add_15min").style.pointerEvents = "none"
+  }
+  document.getElementById("add_60min").innerHTML = "{-60 min}"
+  if (w().subtract(1, 'h').isBefore(now)) {
+    document.getElementById("add_60min").style.pointerEvents = "none"
+  }
+}
+
+function keyDown(event) {
+  if (event.altKey) {
+    altGuard = true
+    add_multiplier = -1
+    
+
+    
+    setNegativeAdditions()
+  }
+}
+
+function keyUp() {
+  if (altGuard) {
+    console.log ("alt key")
+    document.getElementById("add_5sec").innerHTML = "{+05 sec}"
+    document.getElementById("add_5sec").style.pointerEvents = "auto"
+    document.getElementById("add_30sec").innerHTML = "{+30 sec}"
+    document.getElementById("add_30sec").style.pointerEvents = "auto"
+    document.getElementById("add_1min").innerHTML = "{+01 min}"
+    document.getElementById("add_1min").style.pointerEvents = "auto"
+    document.getElementById("add_5min").innerHTML = "{+05 min}"
+    document.getElementById("add_5min").style.pointerEvents = "auto"
+    document.getElementById("add_15min").innerHTML = "{+15 min}"
+    document.getElementById("add_15min").style.pointerEvents = "auto"
+    document.getElementById("add_60min").innerHTML = "{+60 min}"
+    document.getElementById("add_60min").style.pointerEvents = "auto"
+    add_multiplier = 1;
+  }
+  altGuard = false;
+}
 
 
 function log_ (y) {
@@ -88,13 +146,18 @@ function reset(x)  {
 }
 
 function add(x) {
-  if ( x< 1) {
+  
+  x = x * add_multiplier;
+  if ( Math.abs(x)< 1) {
     setWhen (when.add(x * 100, 'seconds'))
   } else {
     // duration_min += x
     setWhen (when.add(x, 'minutes'))
   }  
   timer_done = when.isBefore (moment())
+  if (x < 1) {
+    setNegativeAdditions()
+  }
 }
 
 function pad(y) {
@@ -299,9 +362,11 @@ function toggleControls () {
     container.className  = "presentationMode"
     document.getElementById("activity_banner").className = "presentationMode"
     document.getElementById("counter").className= "presentationMode"
+    document.getElementById("shortcuts_info").style.display="none"
     is_full_screen = true;
   } else {
     controls.style.display = "block"    
+    document.getElementById("shortcuts_info").style.display="block"
     jumbo.className = "jumbotron"
     container.className = "container"
     document.getElementById("activity_banner").className = ""
@@ -407,8 +472,8 @@ function startTimer() {
     document.getElementById("theContainer");
   container.addEventListener('mousemove',showBtnToggle);
 
-  // container.addEventListener('keydown',keyDown)
-  // container.addEventListener('keyup',keyUp)
+  document.addEventListener('keydown',keyDown)
+  document.addEventListener('keyup',keyUp)
 
   for (let i = 0; i < n_exact; i++) {
     exactElements.push (document.getElementById("exact" + i));
