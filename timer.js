@@ -120,9 +120,9 @@ function displayCurrent() {
 function persistWhen (){
   try {    
     localStorage.setItem("when", when.unix());
-    var diff = when.diff (moment());
-    let minutes = Math.ceil ( (diff / 60000) % 60);    
-    log_ ( "Duration set to " + minutes + " min until " + when.format('LTS') );    
+    var duration = moment.duration(when.diff (moment()));
+    
+    log_ ( "Duration set to " + duration.humanize() + " until " + when.format('LTS') );    
     displayCurrent()
     render()
   } catch (err) {
@@ -140,7 +140,7 @@ function reset(x)  {
   if (x < 1) {    
     setWhen (moment().add(x*100, 'seconds'));
   } else {    
-    setWhen (when = moment().add(x,'minutes'));
+    setWhen ( moment().add(x,'minutes'));
   }
   timer_done = false;
 }
