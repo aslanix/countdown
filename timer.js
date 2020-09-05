@@ -13,7 +13,7 @@ function mouseDown () {
     mouseDownGuard = r;
     setTimeout(()=> {
       if (mouseDownGuard == r) {
-        document.getElementById("counter").innerHTML = "until " + when.format ("HH:MM")
+        document.getElementById("counter").innerHTML = "until " + when.format ("HH:mm")
         showing_when = true;
       }
     },500)
