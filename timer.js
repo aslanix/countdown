@@ -64,21 +64,8 @@ function setNegativeAdditions() {
   }
 }
 
-function keyDown(event) {
-  if (event.altKey) {
-    altGuard = true
-    add_multiplier = -1
-    
-
-    
-    setNegativeAdditions()
-  }
-}
-
-function keyUp() {
-  if (altGuard) {
-    console.log ("alt key")
-    document.getElementById("add_5sec").innerHTML = "{+05 sec}"
+function setPositiveAdditions() {
+  document.getElementById("add_5sec").innerHTML = "{+05 sec}"
     document.getElementById("add_5sec").style.pointerEvents = "auto"
     document.getElementById("add_30sec").innerHTML = "{+30 sec}"
     document.getElementById("add_30sec").style.pointerEvents = "auto"
@@ -91,6 +78,22 @@ function keyUp() {
     document.getElementById("add_60min").innerHTML = "{+60 min}"
     document.getElementById("add_60min").style.pointerEvents = "auto"
     add_multiplier = 1;
+}
+
+function keyDown(event) {
+  if (event.altKey) {
+    altGuard = true
+    add_multiplier = -1
+    
+    
+    setNegativeAdditions()
+  }
+}
+
+function keyUp() {
+  if (altGuard) {
+    setPositiveAdditions()
+    
   }
   altGuard = false;
 }
@@ -474,6 +477,9 @@ function startTimer() {
 
   document.addEventListener('keydown',keyDown)
   document.addEventListener('keyup',keyUp)
+  window.onfocus = function () {
+    setPositiveAdditions()
+  }
 
   for (let i = 0; i < n_exact; i++) {
     exactElements.push (document.getElementById("exact" + i));
